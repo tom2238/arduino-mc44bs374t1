@@ -21,6 +21,10 @@
 #define MC44BS374T1_SFD_65     0x03  // Sound Subcarrier Freq 6.5 MHz
 #define MC44BS374T1_TPEN_OFF   0x00  // Test Pattern Signal OFF
 #define MC44BS374T1_TPEN_ON    0x01  // Test Pattern Signal ON
+#define MC44BS374T1_UHF_MAX    800000 // Max UHF oscillator freq
+#define MC44BS374T1_UHF_MIN    460000 // Min UHF oscillator freq
+#define MC44BS374T1_VHF_MAX    460000 // Max VHF oscillator freq
+#define MC44BS374T1_VHF_MIN    45000  // Min VHF oscillator freq
 
 enum MC44BS374T1_WMODE_1 {
   MC44BS374T1_WM1_NORMAL,   // Normal operation
@@ -48,6 +52,8 @@ namespace MC44BS374T1 {
   class RFModulator {
     private:
       uint8_t iic_address;    // 0x65
+      uint16_t rf_value;      // 12 bit divider 250 kHz step
+      uint8_t rf_divider;     //
       void SendDataRaw(uint8_t c1, uint8_t c0, uint8_t fm, uint8_t fl);
       uint8_t RegisterC1(uint8_t so, uint8_t lop, uint8_t ps, uint8_t wm2, uint8_t wm1);
       uint8_t RegisterC0(uint8_t pwc, uint8_t osc, uint8_t att, uint8_t sfd, uint8_t wm2);
@@ -56,6 +62,7 @@ namespace MC44BS374T1 {
     public:
       // Set IIC address of modulator
       RFModulator(uint8_t address);
+      void SetFrequency(uint32_t freq);
   };
 }
 
