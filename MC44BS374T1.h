@@ -51,18 +51,30 @@ enum MC44BS374T1_WMODE_2 {
 namespace MC44BS374T1 {
   class RFModulator {
     private:
-      uint8_t iic_address;    // 0x65
+      uint8_t iic_address;    // 0x65 - default
       uint16_t rf_value;      // 12 bit divider 250 kHz step
-      uint8_t rf_divider;     //
+      uint8_t rf_divider;     // WM1 - for VHF range
+      uint8_t rf_test;        // WM2 - test modes
+      uint8_t rf_so;          // Sound oscillator
+      uint8_t rf_lop;         // Logic output pin
+      uint8_t rf_ps;          // Picture to sound ratio
+      uint8_t rf_pwc;         // Peak white clip
+      uint8_t rf_osc;         // UHF oscillator
+      uint8_t rf_att;         // Attenuation
+      uint8_t rf_sfd;         // Sound subcarrier
+      uint8_t rf_tpen;        // Test pattern
       void SendDataRaw(uint8_t c1, uint8_t c0, uint8_t fm, uint8_t fl);
       uint8_t RegisterC1(uint8_t so, uint8_t lop, uint8_t ps, uint8_t wm2, uint8_t wm1);
       uint8_t RegisterC0(uint8_t pwc, uint8_t osc, uint8_t att, uint8_t sfd, uint8_t wm2);
       uint8_t RegisterFM(uint8_t tpen, uint16_t divider);
       uint8_t RegisterFL(uint16_t divider, uint8_t wm1);
+      void SendRegister();
     public:
       // Set IIC address of modulator
       RFModulator(uint8_t address);
       void SetFrequency(uint32_t freq);
+      void SetPictureSoundRatio(uint8_t val);
+      void SetSoundSubcarrier(uint8_t val);
   };
 }
 

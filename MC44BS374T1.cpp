@@ -64,8 +64,17 @@ namespace MC44BS374T1 {
 
 
   RFModulator::RFModulator(uint8_t address) {
-    Wire.begin();
     iic_address = address;
+    rf_test = MC44BS374T1_WM2_NORMAL;
+    rf_divider = MC44BS374T1_WM1_NORMAL;
+    rf_so = MC44BS374T1_SO_ON;
+    rf_lop = MC44BS374T1_LOP_HIGH;
+    rf_ps = MC44BS374T1_PS_12;
+    rf_pwc = MC44BS374T1_PWC_ON;
+    rf_osc = MC44BS374T1_OSC_NORMAL;
+    rf_att = MC44BS374T1_ATT_NORMAL;
+    rf_sfd = MC44BS374T1_SFD_65;
+    rf_tpen = MC44BS374T1_TPEN_OFF;
   }
 
   void RFModulator::SetFrequency(uint32_t freq) {
@@ -95,9 +104,42 @@ namespace MC44BS374T1 {
         rf_divider = MC44BS374T1_WM1_NORMAL;
         freq = 871250;
       }
+     /* Serial.print("FS:");
+      Serial.print(freq);
+      Serial.print(":DV:");
+      Serial.print(rfdivider);
+      Serial.print(":RV:");*/
       uint32_t freqdiv = freq / 10;
       freqdiv *= 4 * rfdivider;
-      rf_value = freq / 100;
+      rf_value = freqdiv / 100;
+      // Serial.println(rf_value);
+      SendRegister();
+  }
+
+  void RFModulator::SetPictureSoundRatio(uint8_t val) {
+    rf_ps = val;
+    SendRegister();
+  }
+
+  void RFModulator::SetSoundSubcarrier(uint8_t val) {
+    rf_sfd = val;
+    SendRegister();
+  }
+
+  void RFModulator::SendRegister() {
+    uint8_t c0 = RegisterC0(rf_pwc, rf_osc, rf_att, rf_sfd, rf_test);
+    uint8_t c1 = RegisterC1(rf_so, rf_lop, rf_ps, rf_test, rf_divider);
+    uint8_t fm = RegisterFM(rf_tpen, rf_value);
+    uint8_t fl = RegisterFL(rf_value, rf_divider);
+    /*Serial.print("SR:");
+    Serial.print(c1, HEX);
+    Serial.print(":");
+    Serial.print(c0, HEX);
+    Serial.print(":");
+    Serial.print(fm, HEX);
+    Serial.print(":");
+    Serial.println(fl, HEX);*/
+    SendDataRaw(c1,c0,fm,fl);
   }
 }
 
