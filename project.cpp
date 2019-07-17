@@ -12,8 +12,9 @@ void loop() {
   //Serial.println("Line>>");
 
   MC44BS374T1::RFModulator rc(0x65);
-  rc.SetFrequency(96000); // 96 MHz
+  rc.SetFrequency(495250); // 495.25 MHz - UHF CH 24
+  //rc.SetChannel(24);
   rc.SetPictureSoundRatio(MC44BS374T1_PS_12);
-  rc.SetSoundSubcarrier(MC44BS374T1_SFD_65); // Audio 89.5, 102.5 MHz
-  delay(1000);
+  rc.SetSoundSubcarrier(MC44BS374T1_SFD_65); // Audio 488.75, 501.75 MHz
+  delay(5000);
 }

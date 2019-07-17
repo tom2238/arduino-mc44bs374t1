@@ -21,10 +21,15 @@
 #define MC44BS374T1_SFD_65     0x03  // Sound Subcarrier Freq 6.5 MHz
 #define MC44BS374T1_TPEN_OFF   0x00  // Test Pattern Signal OFF
 #define MC44BS374T1_TPEN_ON    0x01  // Test Pattern Signal ON
-#define MC44BS374T1_UHF_MAX    800000 // Max UHF oscillator freq
+#define MC44BS374T1_UHF_MAX    880000 // Max UHF oscillator freq
 #define MC44BS374T1_UHF_MIN    460000 // Min UHF oscillator freq
 #define MC44BS374T1_VHF_MAX    460000 // Max VHF oscillator freq
 #define MC44BS374T1_VHF_MIN    45000  // Min VHF oscillator freq
+#define MC44BS374T1_CH_1       49750  // I - VHF, freq kHz, CH 1
+#define MC44BS374T1_CH_2       77250  // II - VHF, freq kHz, CH 3
+#define MC44BS374T1_CH_3       175250 // III - VHF, freq kHz, CH 6
+#define MC44BS374T1_CH_4       471250 // IV+V - UHF, freq kHz, CH 21
+
 
 enum MC44BS374T1_WMODE_1 {
   MC44BS374T1_WM1_NORMAL,   // Normal operation
@@ -75,6 +80,7 @@ namespace MC44BS374T1 {
       void SetFrequency(uint32_t freq);
       void SetPictureSoundRatio(uint8_t val);
       void SetSoundSubcarrier(uint8_t val);
+      void SetChannel(uint8_t channel);      // CCIR D/K, East Europe
   };
 }
 

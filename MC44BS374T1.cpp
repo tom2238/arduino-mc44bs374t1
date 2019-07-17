@@ -126,6 +126,21 @@ namespace MC44BS374T1 {
     SendRegister();
   }
 
+  void RFModulator::SetChannel(uint8_t channel) { // CCIR D/K
+    if((channel <= 71) && (channel >= 21)) {
+      SetFrequency(MC44BS374T1_CH_4 + (channel - 21) * 8); // 8 MHz step
+    }
+    else if((channel <= 12) && (channel >= 6)) {
+      SetFrequency(MC44BS374T1_CH_3 + (channel - 6) * 8); // 8 MHz step
+    }
+    else if((channel <= 5) && (channel >= 3)) {
+      SetFrequency(MC44BS374T1_CH_2 + (channel - 3) * 8); // 8 MHz step
+    }
+    else if((channel <= 2) && (channel >= 1)) {
+      SetFrequency(MC44BS374T1_CH_1 + (channel - 1) * 9.5); // 9.5 MHz step
+    }
+  }
+
   void RFModulator::SendRegister() {
     uint8_t c0 = RegisterC0(rf_pwc, rf_osc, rf_att, rf_sfd, rf_test);
     uint8_t c1 = RegisterC1(rf_so, rf_lop, rf_ps, rf_test, rf_divider);
