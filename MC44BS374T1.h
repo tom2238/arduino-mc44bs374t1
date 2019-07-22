@@ -81,6 +81,13 @@ namespace MC44BS374T1 {
       void SetPictureSoundRatio(uint8_t val);
       void SetSoundSubcarrier(uint8_t val);
       void SetChannel(uint8_t channel);      // CCIR D/K, East Europe
+      void SetSoundOscillator(uint8_t state);
+      void SetLogicOutputPort(uint8_t state);
+      void SetPeakWhiteClip(uint8_t state);
+      void SetOscillator(uint8_t state);
+      void SetAttenuation(uint8_t state);
+      void SetTestPattern(uint8_t state);
+      void SetTestMode(uint8_t state);
   };
 }
 

@@ -141,6 +141,41 @@ namespace MC44BS374T1 {
     }
   }
 
+  void RFModulator::SetSoundOscillator(uint8_t state) {
+    rf_osc = state;
+    SendRegister();
+  }
+
+  void RFModulator::SetLogicOutputPort(uint8_t state) {
+    rf_lop = state;
+    SendRegister();
+  }
+
+  void RFModulator::SetPeakWhiteClip(uint8_t state) {
+    rf_pwc = state;
+    SendRegister();
+  }
+
+  void RFModulator::SetOscillator(uint8_t state) {
+    rf_osc = state;
+    SendRegister();
+  }
+
+  void RFModulator::SetAttenuation(uint8_t state) {
+    rf_att = state;
+    SendRegister();
+  }
+
+  void RFModulator::SetTestPattern(uint8_t state) {
+    rf_tpen = state;
+    SendRegister();
+  }
+
+  void RFModulator::SetTestMode(uint8_t state) {
+    rf_test = state;
+    SendRegister();
+  }
+
   void RFModulator::SendRegister() {
     uint8_t c0 = RegisterC0(rf_pwc, rf_osc, rf_att, rf_sfd, rf_test);
     uint8_t c1 = RegisterC1(rf_so, rf_lop, rf_ps, rf_test, rf_divider);
