@@ -176,6 +176,13 @@ namespace MC44BS374T1 {
     SendRegister();
   }
 
+  uint8_t RFModulator::GetStatus() {
+    Wire.beginTransmission(iic_address);
+    uint8_t state = Wire.read();
+    Wire.endTransmission();
+    return state;
+  }
+
   void RFModulator::SendRegister() {
     uint8_t c0 = RegisterC0(rf_pwc, rf_osc, rf_att, rf_sfd, rf_test);
     uint8_t c1 = RegisterC1(rf_so, rf_lop, rf_ps, rf_test, rf_divider);

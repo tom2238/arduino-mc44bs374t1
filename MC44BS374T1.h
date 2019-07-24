@@ -88,6 +88,7 @@ namespace MC44BS374T1 {
       void SetAttenuation(uint8_t state);
       void SetTestPattern(uint8_t state);
       void SetTestMode(uint8_t state);
+      uint8_t GetStatus();
   };
 }
 
