@@ -142,7 +142,7 @@ namespace MC44BS374T1 {
   }
 
   void RFModulator::SetSoundOscillator(uint8_t state) {
-    rf_osc = state;
+    rf_so = state;
     SendRegister();
   }
 
